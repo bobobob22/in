@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export interface FetchWithPaginationResult<T> {
   results: T[];
@@ -33,36 +33,35 @@ export function useFetchWithPagination<T>({
   const [numberOfResults, setNumberOfResults] =
     useState<number>(initialPageSize);
 
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${url}?page=${page}&results=${numberOfResults}`
+      );
+      if (!response.ok) {
+        throw new Error("Response was wrong");
+      }
+
+      const jsonData: FetchWithPaginationResult<T> = await response.json();
+      setLoading(false);
+
+      setData((prevData) => [...prevData, ...jsonData.results]);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err);
+      } else {
+        setError(new Error("An unknown error occurred"));
+      }
+      setLoading(false);
+    }
+  }, [page, url, numberOfResults]);
+
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${url}?page=${page}&results=${numberOfResults}`
-        );
-        if (!response.ok) {
-          throw new Error("Response was wrong");
-        }
-
-        const jsonData: FetchWithPaginationResult<T> = await response.json();
-        setLoading(false);
-
-        setData((prevData) => [...prevData, ...jsonData.results]);
-
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("An unknown error occurred"));
-        }
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [url, page, numberOfResults]);
+  }, [url, page, numberOfResults, fetchData]);
 
   const nextPage = () => {
     setPage(page + 1);
