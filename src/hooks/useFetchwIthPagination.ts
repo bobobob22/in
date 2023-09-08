@@ -4,7 +4,7 @@ export interface FetchWithPaginationResult<T> {
   results: T[];
 }
 
-interface FetchWithPaginationProps<T> {
+interface FetchWithPaginationProps {
   url: string;
   initialPage?: number;
   initialPageSize?: number;
@@ -25,7 +25,7 @@ export function useFetchWithPagination<T>({
   url,
   initialPage = 1,
   initialPageSize = 5,
-}: FetchWithPaginationProps<T>): PaginatedData<T> {
+}: FetchWithPaginationProps): PaginatedData<T> {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
