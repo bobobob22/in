@@ -5,15 +5,18 @@ export const AccRowData = styled.div`
 `;
 
 export const StyledLink = styled.a<{ hasUnderline?: boolean }>`
-  font-size: 1.2rem;
-  color: #000000;
+  font-size: 1.6rem;
+  color: ${props => props.theme.black};
   text-decoration: ${({ hasUnderline }) =>
     hasUnderline ? "underline" : "none"};
 `;
 
 export const StyledTitle = styled.p`
-  color: #54585c;
-  font-size: 1rem;
+  color: ${props => props.theme.grey800};
+  font-size: 1.4rem;
 `;
 
+export const StyledResult = styled.p`
+  font-size: 1.6rem;
+`
 

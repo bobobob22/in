@@ -3,7 +3,7 @@ import { IAccountInfo } from "../../../types/accountant";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { formatPriceToPLN } from "../../../utils/formatPriceToPln";
 import { mockAverageAccountPrice } from "../../../utils/mockAverageAccountPrice";
-import { AccRowData, StyledLink, StyledTitle } from "../AccountantStyles";
+import { AccRowData, StyledLink, StyledTitle, StyledResult } from "../AccountantStyles";
 import {
   AccCard,
   AccHeader,
@@ -11,9 +11,10 @@ import {
   AccName,
   AvatarWrapper,
   AccAvatar,
-  StyledButton,
+  StyledPrice,
 } from "./styles";
 import { AdditionalInfo } from "../AdditionalInfo/AdditionalInfo";
+import { Button } from "../../../ui/Button/Button";
 
 export const SingleAccountant = ({
   cell,
@@ -29,6 +30,10 @@ export const SingleAccountant = ({
     const mockedPrice = mockAverageAccountPrice(registered.age);
     return formatPriceToPLN(mockedPrice);
   };
+
+  const toggleMoreInfo = () => {
+    setShowMoreInfo(!showMoreInfo)
+  }
 
   return (
     <AccCard>
@@ -59,21 +64,21 @@ export const SingleAccountant = ({
 
         <AccRowData>
           <StyledTitle>Średnia cena netto uslugi / m-c</StyledTitle>
-          <p>
+          <StyledResult>
             {`${mockedAccountantPrice()} `}
-            <span>PLN</span>
-          </p>
+            <StyledPrice>PLN</StyledPrice>
+          </StyledResult>
         </AccRowData>
 
         {showMoreInfo ? (
           <>
             <AdditionalInfo location={rest.location} />
-            <StyledButton onClick={() => setShowMoreInfo(false)}>
+            <Button onClick={toggleMoreInfo}>
               Schowaj
-            </StyledButton>
+            </Button>
           </>
         ) : (
-          <StyledButton onClick={() => setShowMoreInfo(true)}>Dowiedz sie wiecej</StyledButton>
+          <Button onClick={toggleMoreInfo}>Dowiedz sie wiecej</Button>
         )}
       </div>
     </AccCard>

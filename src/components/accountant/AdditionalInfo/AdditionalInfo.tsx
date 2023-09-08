@@ -1,4 +1,4 @@
-import { AccRowData, StyledTitle } from "../AccountantStyles";
+import { AccRowData, StyledTitle, StyledResult } from "../AccountantStyles";
 
 interface IAdditionalInfo {
   location: {
@@ -14,12 +14,12 @@ export const AdditionalInfo = ({
     <>
       <AccRowData>
         <StyledTitle>Kraj zamieszkania</StyledTitle>
-        <p>{country}</p>
+        <StyledResult>{country}</StyledResult>
       </AccRowData>
 
       <AccRowData>
         <StyledTitle>Miasto</StyledTitle>
-        <p>{city}</p>
+        <StyledResult>{city}</StyledResult>
       </AccRowData>
     </>
   );

@@ -10,7 +10,7 @@ const spin = keyframes`
 `;
 
 export const StyledLoader = styled.div`
-  border: 4px solid #3498db;
+  border: 4px solid ${props => props.theme.blue600};
   border-top: 4px solid transparent;
   border-radius: 50%;
   width: 50px;
