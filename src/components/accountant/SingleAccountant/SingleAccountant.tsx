@@ -3,7 +3,12 @@ import { IAccountInfo } from "../../../types/accountant";
 import { formatPhoneNumber } from "../../../utils/formatPhoneNumber";
 import { formatPriceToPLN } from "../../../utils/formatPriceToPln";
 import { mockAverageAccountPrice } from "../../../utils/mockAverageAccountPrice";
-import { AccRowData, StyledLink, StyledTitle, StyledResult } from "../AccountantStyles";
+import {
+  AccRowData,
+  StyledLink,
+  StyledTitle,
+  StyledResult,
+} from "../AccountantStyles";
 import {
   AccCard,
   AccHeader,
@@ -22,6 +27,7 @@ export const SingleAccountant = ({
   email,
   picture,
   registered,
+  gender,
   ...rest
 }: IAccountInfo) => {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
@@ -32,8 +38,8 @@ export const SingleAccountant = ({
   };
 
   const toggleMoreInfo = () => {
-    setShowMoreInfo(!showMoreInfo)
-  }
+    setShowMoreInfo(!showMoreInfo);
+  };
 
   return (
     <AccCard>
@@ -42,7 +48,9 @@ export const SingleAccountant = ({
           <AccAvatar src={picture.medium} alt="Avatar ksiegowej" />
         </AvatarWrapper>
         <div>
-          <AccTitle>Twoja księgowa</AccTitle>
+          <AccTitle>
+            {gender == "male" ? "Twoj ksiegowy" : "Twoja księgowa"}
+          </AccTitle>
           <AccName>{`${name.first} ${name.last}`}</AccName>
         </div>
       </AccHeader>
@@ -50,7 +58,7 @@ export const SingleAccountant = ({
       <div>
         <AccRowData>
           <StyledTitle>E-mail</StyledTitle>
-          <StyledLink href={`mailto:${email}`} hasUnderline>
+          <StyledLink href={`mailto:${email}`} $hasUnderline>
             {email}
           </StyledLink>
         </AccRowData>
@@ -73,9 +81,7 @@ export const SingleAccountant = ({
         {showMoreInfo ? (
           <>
             <AdditionalInfo location={rest.location} />
-            <Button onClick={toggleMoreInfo}>
-              Schowaj
-            </Button>
+            <Button onClick={toggleMoreInfo}>Schowaj</Button>
           </>
         ) : (
           <Button onClick={toggleMoreInfo}>Dowiedz sie wiecej</Button>

@@ -5,7 +5,10 @@ export interface IAccountResult {
   };
 }
 
+type GenderType = 'male' | 'female'
+
 export interface IAccountInfo {
+  gender: GenderType;
   cell: string;
   name: {
     first: string;
